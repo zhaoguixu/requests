@@ -10,6 +10,7 @@ This module contains the primary objects that power Requests.
 import collections
 import datetime
 
+from copy import copy
 from io import BytesIO, UnsupportedOperation
 from .hooks import default_hooks
 from .structures import CaseInsensitiveDict
@@ -320,7 +321,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
         p.method = self.method
         p.url = self.url
         p.headers = self.headers.copy() if self.headers is not None else None
-        p._cookies = self._cookies.copy() if self._cookies is not None else None
+        p._cookies = copy(self._cookies) if self._cookies is not None else None
         p.body = self.body
         p.hooks = self.hooks
         return p
